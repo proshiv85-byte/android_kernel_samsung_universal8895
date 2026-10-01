@@ -69,6 +69,10 @@ ifeq ($(cc-name),clang)
 KBUILD_CFLAGS	+= -mno-implicit-float
 else
 KBUILD_CFLAGS	+= -mgeneral-regs-only
+# Newer GCC inlines memcpy() with unaligned accesses; several Samsung drivers
+# memcpy() to/from device memory (e.g. abox SRAM), where unaligned accesses
+# fault. Keep all generated accesses aligned.
+KBUILD_CFLAGS	+= $(call cc-option,-mstrict-align)
 endif
 KBUILD_CFLAGS	+= $(lseinstr) $(vdso32)
 KBUILD_CFLAGS	+= -fno-pic
