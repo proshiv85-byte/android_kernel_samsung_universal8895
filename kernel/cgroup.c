@@ -1738,6 +1738,12 @@ static int parse_cgroupfs_options(char *data, struct cgroup_sb_opts *opts)
 			opts->cpuset_clone_children = true;
 			continue;
 		}
+		/*
+		 * Android (12+) mounts cpuset with "cpuset_v2_mode" (added in
+		 * 4.15). Accept it as a no-op so the mount does not fail.
+		 */
+		if (!strcmp(token, "cpuset_v2_mode"))
+			continue;
 		if (!strcmp(token, "xattr")) {
 			opts->flags |= CGRP_ROOT_XATTR;
 			continue;

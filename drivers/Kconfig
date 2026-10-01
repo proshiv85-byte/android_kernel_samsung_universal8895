@@ -240,5 +240,6 @@ source "drivers/gator_5.26/Kconfig"
 
 source "drivers/redriver/Kconfig"
 
-source "drivers/kernelsu/Kconfig"
+# KernelSU disabled for AOSP build
+# source "drivers/kernelsu/Kconfig"
 endmenu
