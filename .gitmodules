@@ -1,4 +1,4 @@
 [submodule "KernelSU"]
 	path = KernelSU
-	url = https://github.com/KernelSU-Next/KernelSU-Next
-	branch = legacy
+	url = https://github.com/proshiv85-byte/KernelSU-Next
+	branch = legacy-4.4-kernel-read

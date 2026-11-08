@@ -89,6 +89,23 @@ int ss_initialized;
  */
 static u32 latest_granting;
 
+#ifdef CONFIG_KSU
+/*
+ * KernelSU-Next (legacy, < 4.17) patches the loaded policy in place and then
+ * calls avc_ss_reset() with a sequence number of its own. Keep
+ * latest_granting at least that high: otherwise every later decision carries
+ * an older seqno than the AVC's latest_notif, avc_insert() refuses to cache
+ * anything and logs "avc:  seqno N < latest_notif M" for every check.
+ */
+void security_sync_policy_seqno(u32 seqno)
+{
+	write_lock_irq(&policy_rwlock);
+	if (seqno > latest_granting)
+		latest_granting = seqno;
+	write_unlock_irq(&policy_rwlock);
+}
+#endif
+
 /* Forward declaration. */
 static int context_struct_to_string(struct context *context, char **scontext,
 				    u32 *scontext_len);

@@ -955,6 +955,10 @@ int avc_ss_reset(u32 seqno)
 	struct avc_callback_node *c;
 	int rc = 0, tmprc;
 
+#ifdef CONFIG_KSU
+	security_sync_policy_seqno(seqno);
+#endif
+
 	avc_flush();
 
 	for (c = avc_callbacks; c; c = c->next) {

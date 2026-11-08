@@ -97,6 +97,9 @@ extern int selinux_policycap_alwaysnetwork;
 int security_mls_enabled(void);
 
 int security_load_policy(void *data, size_t len);
+#ifdef CONFIG_KSU
+void security_sync_policy_seqno(u32 seqno);
+#endif
 int security_read_policy(void **data, size_t *len);
 size_t security_policydb_len(void);
 
